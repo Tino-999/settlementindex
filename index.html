@@ -1,236 +1,113 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <title>Wer forscht an der Besiedlung anderer Planeten?</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <title>Settlement Index</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
-      --bg: #000000;
-      --fg: #ffffff;
-      --accent: #5af;
-      --max-width: 900px;
+      --bg: #05070a;
+      --fg: #f4f4f4;
+      --fg-soft: #b0b0b0;
+      --accent: #7fffd4;
+      --accent-soft: #3ea896;
     }
-    * { box-sizing: border-box; }
-    body {
+
+    * {
+      box-sizing: border-box;
       margin: 0;
-      padding: 40px 20px;
-      background: var(--bg);
-      color: var(--fg);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.6;
-      display: flex;
-      justify-content: center;
+      padding: 0;
     }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #111827 0, var(--bg) 55%);
+      color: var(--fg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.2rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
     main {
       width: 100%;
-      max-width: var(--max-width);
+      max-width: 40rem; /* gut auf iPhone + Desktop */
     }
-    h1, h2, h3, h4 {
-      font-weight: 600;
+
+    pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 0.75rem;
+      padding: 1.2rem 1.4rem;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.7);
     }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-    h2 {
-      margin-top: 2rem;
-      border-bottom: 1px solid #333;
-      padding-bottom: 0.2rem;
-    }
+
+    .accent     { color: var(--accent); }
+    .soft       { color: var(--fg-soft); }
+    .tag        { color: var(--accent-soft); }
+
     a {
       color: var(--accent);
       text-decoration: none;
     }
+
     a:hover {
       text-decoration: underline;
-    }
-    code {
-      background: #111;
-      padding: 0.1rem 0.3rem;
-      border-radius: 3px;
-      font-size: 0.9em;
-    }
-    .meta {
-      font-size: 0.9rem;
-      color: #999;
-      margin-bottom: 2rem;
-    }
-    ul {
-      padding-left: 1.2rem;
-    }
-    .entry {
-      margin-bottom: 1.2rem;
-    }
-    .tagline {
-      color: #bbb;
-      font-size: 0.95rem;
-      margin-bottom: 1.5rem;
     }
   </style>
 </head>
 <body>
-<main>
+  <main>
+    <pre>
++--------------------------------------------------+
+|  <span class="accent">SETTLEMENT INDEX</span>                              |
+|  minimal log of off-world habitats              |
++--------------------------------------------------+
 
-  <h1>Wer forscht an der Besiedlung anderer Planeten?</h1>
-  <p class="tagline">
-    Eine einfache Übersicht, wer sich wissenschaftlich mit der Besiedlung von Mars, Mond und anderen Welten beschäftigt.
-  </p>
+<span class="tag">PLANET</span>
+  Mars · Mond · Ceres · Outer Moons
 
-  <p class="meta">
-    Version 0.1 – letzte Aktualisierung: 2025-12-09 · Maintainer: <em>Dein Name</em>
-  </p>
+<span class="tag">MISSION STATUS</span>
+  [OK] life support holding
+  [OK] food & water reserves
+  [..] governance model in debate
+  [!!] meaning of life: unresolved
 
-  <!-- 1. Zweck der Seite -->
-  <h2 id="zweck">1. Zweck der Seite</h2>
-  <p>
-    Diese Seite sammelt Institutionen, Forschungsgruppen, Think Tanks und Einzelpersonen,
-    die sich ernsthaft mit der Besiedlung anderer Himmelskörper beschäftigen – mit Fokus auf
-    wissenschaftliche, technische, gesellschaftliche und ethische Fragen.
-  </p>
-  <p>
-    Keine Science-Fiction, sondern echte Forschung, Studien, Programme und Initiativen.
-  </p>
+<span class="tag">HABITATS</span>
+  - MARS-01  lowland crater  ·  132 crew
+  - MARS-02  lava tube       ·   47 crew
+  - LUNA-α   farside array   ·   23 crew
 
-  <!-- 2. Wie man die Seite liest -->
-  <h2 id="lesen">2. Wie man diese Seite liest</h2>
-  <ul>
-    <li><strong>Institution</strong>: Raumfahrtagentur, Universität, Forschungszentrum.</li>
-    <li><strong>Forschungsgruppe</strong>: spezialisierte Gruppe innerhalb einer Institution.</li>
-    <li><strong>Think Tank / NGO</strong>: Politik, Governance, Ethik, Strategien.</li>
-    <li><strong>Einzelperson</strong>: Forscher, Philosophin, Ökonomin, Ingenieur.</li>
-  </ul>
-  <p>
-    Themenkategorien (siehe unten): <em>Marsbesiedlung, Mondbasen, Ökonomie &amp; Politik,
-    Ethik &amp; Religion, Technologie &amp; Infrastruktur, Multi-Planetarische Zivilisation</em>.
-  </p>
+<span class="tag">PRIORITÄTEN</span>
+  1. nicht sterben
+  2. nicht durchdrehen
+  3. nicht die Erde vergessen
+  4. nicht die Fehler der Erde kopieren
 
-  <!-- 3. Themenübersicht -->
-  <h2 id="themen">3. Themenübersicht</h2>
-  <ul>
-    <li><a href="#mars">Marsbesiedlung</a></li>
-    <li><a href="#mond">Mondbasen</a></li>
-    <li><a href="#oekopolitik">Off-World-Ökonomie &amp; Politik</a></li>
-    <li><a href="#ethik">Ethik, Philosophie &amp; Religion im All</a></li>
-    <li><a href="#technik">Technologie &amp; Infrastruktur</a></li>
-    <li><a href="#multiplanet">Multi-Planetarische Zivilisation (allgemein)</a></li>
-    <li><a href="#personen">Einzelpersonen (quer über alle Themen)</a></li>
-    <li><a href="#buecher">Wichtige Bücher &amp; Reports</a></li>
-  </ul>
+<span class="tag">ETHIK / PHILOSOPHIE</span>
+  - wem "gehört" ein neuer Himmel?
+  - wie viel Risiko darf eine Gesellschaft unterschreiben?
+  - was erzählen wir Kindern, warum wir hier sind?
 
-  <!-- 4. Hauptteil: Akteure nach Themen -->
+<span class="tag">MISSIONSLOG</span>
+  2042-03-01  erste permanente Crew in MARS-01
+  2042-07-19  Wasservorkommen unter Horizonteis bestätigt
+  2043-02-08  erste Geburt außerhalb der Erde
+  2043-11-23  Siedlungsrat stimmt gegen Privatgrundstücke
 
-  <h2 id="mars">4.1 Marsbesiedlung</h2>
+<span class="tag">LESEN</span>
+  - charter/  grundregeln der Siedlung
+  - habitats/ technische daten & skizzen
+  - people/   crews, familien, streitpunkte
 
-  <div class="entry">
-    <h3>Beispiel-Eintrag (Template für dich)</h3>
-    <p><strong>Name:</strong> Center for Mars Settlement Studies (Beispiel)</p>
-    <p><strong>Typ:</strong> Universitäts-Forschungsgruppe</p>
-    <p><strong>Ort:</strong> Beispiel-Universität, USA</p>
-    <p><strong>Fokus:</strong> Langfristige Marsbesiedlung, Habitate, Life Support</p>
-    <p><strong>Stichworte:</strong> Mars, Habitate, Terraforming, Energie</p>
-    <p><strong>Link:</strong> <a href="https://example.org" target="_blank" rel="noopener">https://example.org</a></p>
-    <p><strong>Kurzbeschreibung:</strong><br>
-      Untersucht technische und gesellschaftliche Bedingungen für dauerhaft bewohnte Mars-Siedlungen,
-      inklusive Energieversorgung, Wasseraufbereitung und Governance-Modelle.
-    </p>
-  </div>
-
-  <!-- Ab hier fügst du nach und nach echte Einträge ein -->
-
-  <h2 id="mond">4.2 Mondbasen</h2>
-  <p>
-    Hier listest du Institute, Programme und Gruppen mit Fokus auf Mondstationen und dauerhafte Präsenz
-    auf dem Mond.
-  </p>
-
-  <h2 id="oekopolitik">4.3 Off-World-Ökonomie &amp; Politik</h2>
-  <p>
-    Think Tanks, Policy-Gruppen und Forschungsprojekte zu Eigentumsrechten, Governance,
-    Ressourcenverteilung und Wirtschaftsstrukturen jenseits der Erde.
-  </p>
-
-  <h2 id="ethik">4.4 Ethik, Philosophie &amp; Religion im All</h2>
-  <p>
-    Gruppen und Projekte, die sich mit Sinnfragen, Ritualen, Moral, Recht und möglichen religiösen
-    Entwicklungen in isolierten Off-World-Gemeinschaften beschäftigen.
-  </p>
-
-  <h2 id="technik">4.5 Technologie &amp; Infrastruktur</h2>
-  <p>
-    Fokus auf Life Support, Energie, Transport, Robotik, Bau von Habitaten, ISRU (In-situ
-    resource utilization) usw.
-  </p>
-
-  <h2 id="multiplanet">4.6 Multi-Planetarische Zivilisation</h2>
-  <p>
-    Übergreifende Ansätze, die mehrere Himmelskörper, langfristige Zivilisationsmodelle oder
-    „Multi-Planet“-Strategien betrachten.
-  </p>
-
-  <!-- 5. Einzelpersonen -->
-  <h2 id="personen">5. Einzelpersonen (quer über alle Themen)</h2>
-
-  <div class="entry">
-    <h3>Beispiel-Person (Template)</h3>
-    <p><strong>Name:</strong> Vorname Nachname</p>
-    <p><strong>Disziplin:</strong> z.&nbsp;B. Philosophie, Ökonomie, Raumfahrttechnik</p>
-    <p><strong>Affiliation:</strong> Institut / Universität / Organisation</p>
-    <p><strong>Fokus:</strong> Kurzbeschreibung des Spezialisierungsbereichs</p>
-    <p><strong>Stichworte:</strong> Ethik, Governance, Mars, Mond, Religion, etc.</p>
-    <p><strong>Link:</strong> <a href="https://example.org" target="_blank" rel="noopener">https://example.org</a></p>
-    <p><strong>Wichtige Publikationen:</strong><br>
-      – Titel 1 (Jahr)<br>
-      – Titel 2 (Jahr)
-    </p>
-  </div>
-
-  <!-- 6. Bücher & Reports -->
-  <h2 id="buecher">6. Wichtige Bücher &amp; Reports</h2>
-  <p>
-    Nur ausgewählte Werke, die einen guten Einstieg in das Thema liefern.
-  </p>
-
-  <div class="entry">
-    <h3>Beispiel-Buch (Template)</h3>
-    <p><strong>Autor(en):</strong> Vorname Nachname</p>
-    <p><strong>Titel:</strong> Titel des Buches</p>
-    <p><strong>Jahr:</strong> 20XX</p>
-    <p><strong>Fokus:</strong> z.&nbsp;B. technische Grundlagen, Ethik, Politik, Ökonomie</p>
-    <p><strong>Warum relevant?</strong><br>
-      1–2 Sätze, warum dieses Werk für das Verständnis von Planetensiedlung wichtig ist.
-    </p>
-  </div>
-
-  <!-- 7. Kriterien & Methodik -->
-  <h2 id="kriterien">7. Kriterien &amp; Methodik</h2>
-  <p>
-    Aufgenommen werden:
-  </p>
-  <ul>
-    <li>Wissenschaftliche Institutionen, Programme und peer-reviewte Projekte.</li>
-    <li>Think Tanks und Initiativen mit nachvollziehbaren Publikationen.</li>
-    <li>Einzelpersonen mit relevanten Arbeiten zum Thema Planetensiedlung.</li>
-  </ul>
-  <p>
-    Nicht aufgenommen werden:
-  </p>
-  <ul>
-    <li>Reine Science-Fiction ohne Forschungsbezug.</li>
-    <li>Reine PR-Seiten ohne inhaltliche Tiefe.</li>
-    <li>Esoterische oder pseudowissenschaftliche Inhalte.</li>
-  </ul>
-  <p>
-    Vorschläge und Korrekturen: z.&nbsp;B. über <code>GitHub Issues</code> oder per E-Mail an
-    <em>deine Mailadresse</em> (hier später eintragen).
-  </p>
-
-  <!-- 8. Changelog -->
-  <h2 id="changelog">8. Changelog</h2>
-  <ul>
-    <li>2025-12-09 – Version 0.1, Grundstruktur angelegt.</li>
-  </ul>
-
-</main>
+<span class="soft"># git: github.com/DEIN-USER/settlementindex</span>
+<span class="soft"># rendered via GitHub Pages · pure text · low bandwidth</span>
+    </pre>
+  </main>
 </body>
 </html>
