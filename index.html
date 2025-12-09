@@ -2,112 +2,80 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <title>Settlement Index</title>
+  <title>Planetary Settlement Index</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root {
-      --bg: #05070a;
-      --fg: #f4f4f4;
-      --fg-soft: #b0b0b0;
-      --accent: #7fffd4;
-      --accent-soft: #3ea896;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    /* nur Farben + Schrift, kein Layout-Schnickschnack */
     body {
-      min-height: 100vh;
-      background: radial-gradient(circle at top, #111827 0, var(--bg) 55%);
-      color: var(--fg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.2rem;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    }
-
-    main {
-      width: 100%;
-      max-width: 40rem; /* gut auf iPhone + Desktop */
-    }
-
-    pre {
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      font-size: 0.9rem;
+      margin: 0;
+      padding: 1rem;
+      background: #05070a;
+      color: #f4f4f4;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+                   "Liberation Mono", "Courier New", monospace;
+      font-size: 16px;
       line-height: 1.4;
-      background: rgba(0, 0, 0, 0.6);
-      border-radius: 0.75rem;
-      padding: 1.2rem 1.4rem;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.7);
     }
-
-    .accent     { color: var(--accent); }
-    .soft       { color: var(--fg-soft); }
-    .tag        { color: var(--accent-soft); }
-
     a {
-      color: var(--accent);
+      color: #7fffd4;
       text-decoration: none;
     }
-
     a:hover {
       text-decoration: underline;
     }
+    .tag { color: #7fffd4; }
+    .soft { color: #b0b0b0; }
   </style>
 </head>
 <body>
-  <main>
-    <pre>
-+--------------------------------------------------+
-|  <span class="accent">SETTLEMENT INDEX</span>                              |
-|  minimal log of off-world habitats              |
-+--------------------------------------------------+
+<pre>
+PLANETARY SETTLEMENT INDEX
+==========================
 
-<span class="tag">PLANET</span>
-  Mars · Mond · Ceres · Outer Moons
+<tag class="tag">SCOPE</tag>
+- minimaler, textbasierter Überblick über außerirdische Siedlungen
+- lesbar in jedem Terminal, auf jedem Handy, bei schlechtem Empfang
 
-<span class="tag">MISSION STATUS</span>
-  [OK] life support holding
-  [OK] food & water reserves
-  [..] governance model in debate
-  [!!] meaning of life: unresolved
+<tag class="tag">PLANETEN</tag>
+- Mars
+- Mond
+- Ceres
+- äußere Monde (Europa, Ganymed, Titan …)
 
-<span class="tag">HABITATS</span>
-  - MARS-01  lowland crater  ·  132 crew
-  - MARS-02  lava tube       ·   47 crew
-  - LUNA-α   farside array   ·   23 crew
+<tag class="tag">HABITATE</tag>
+- MARS-01  lowland crater     · 132 crew
+- MARS-02  lava tube          ·  47 crew
+- LUNA-α   farside array      ·  23 crew
 
-<span class="tag">PRIORITÄTEN</span>
-  1. nicht sterben
-  2. nicht durchdrehen
-  3. nicht die Erde vergessen
-  4. nicht die Fehler der Erde kopieren
+<tag class="tag">MISSION STATUS</tag>
+- [OK]   Lebenserhaltung stabil
+- [OK]   Wasser- & Nahrungsversorgung ausreichend
+- [..]   Governance-Modell in Diskussion
+- [!!]   Sinnfrage weiterhin ungeklärt
 
-<span class="tag">ETHIK / PHILOSOPHIE</span>
-  - wem "gehört" ein neuer Himmel?
-  - wie viel Risiko darf eine Gesellschaft unterschreiben?
-  - was erzählen wir Kindern, warum wir hier sind?
+<tag class="tag">PRIORITÄTEN</tag>
+1. nicht sterben
+2. nicht durchdrehen
+3. nicht die Erde vergessen
+4. nicht die Fehler der Erde kopieren
 
-<span class="tag">MISSIONSLOG</span>
-  2042-03-01  erste permanente Crew in MARS-01
-  2042-07-19  Wasservorkommen unter Horizonteis bestätigt
-  2043-02-08  erste Geburt außerhalb der Erde
-  2043-11-23  Siedlungsrat stimmt gegen Privatgrundstücke
+<tag class="tag">ETHIK / PHILOSOPHIE</tag>
+- wem "gehört" neuer Himmel & neue Erde?
+- wie viel Risiko darf eine Gesellschaft unterschreiben?
+- was sagen wir Kindern, warum wir hier sind?
 
-<span class="tag">LESEN</span>
-  - charter/  grundregeln der Siedlung
-  - habitats/ technische daten & skizzen
-  - people/   crews, familien, streitpunkte
+<tag class="tag">MISSIONSLOG</tag>
+- 2042-03-01  erste permanente Crew in MARS-01
+- 2042-07-19  Wasservorkommen unter Horizonteis bestätigt
+- 2043-02-08  erste Geburt außerhalb der Erde
+- 2043-11-23  Siedlungsrat stimmt gegen Privatgrundstücke
 
-<span class="soft"># git: github.com/DEIN-USER/settlementindex</span>
-<span class="soft"># rendered via GitHub Pages · pure text · low bandwidth</span>
-    </pre>
-  </main>
+<tag class="tag">VERZEICHNIS</tag>
+- charter/   grundregeln der Siedlung
+- habitats/  technische daten & skizzen
+- people/    crews, konflikte, routinen
+
+<span class="soft"># repo: github.com/Tino-999/settlementindex</span>
+</pre>
 </body>
 </html>
