@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>einzelpersonen · settlement index</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root{
+      --bg:#000;
+      --fg:#fff;
+      --muted:#bbb;
+      --line:#333;
+      --max:1200px;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--fg);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size:14px;
+      line-height:1.4;
+
+    }
+
+    a{ color:var(--fg); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+
+     .wrap{
+     max-width:none;
+     margin:0;
+     padding:14px 20px 80px;
+     }
+
+
+    nav{
+      display:flex;
+      flex-wrap:wrap;
+      gap:18px;
+      margin-bottom:18px;
+    }
+
+    h1{
+      font-size:15px;
+      font-weight:normal;
+      margin:0 0 10px 0;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+
+    /* Controls (leise, wie Text) */
+    .controls{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin:0 0 10px 0;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .controls button{
+      font:inherit;
+      font-size:13px;
+      color:var(--muted);
+      background:transparent;
+      border:0;
+      padding:0;
+      cursor:pointer;
+    }
+    .controls button:hover{ text-decoration:underline; }
+    .controls button[aria-pressed="true"]{
+      color:var(--fg);
+      text-decoration:underline;
+    }
+
+    /* A–Z Jump */
+    .az{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px 14px;
+      margin:0 0 18px 0;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .az a{
+      color:var(--muted);
+    }
+    .az a:hover{
+      color:var(--fg);
+      text-decoration:underline;
+    }
+    .az a[aria-disabled="true"]{
+      opacity:.35;
+      pointer-events:none;
+      text-decoration:none;
+    }
+
+    /* Grid sizing */
+    .portrait-grid{
+      display:grid;
+      gap:18px;
+    }
+
+    /* Gruppe (Buchstabe) */
+    .group{
+      border-top:1px solid var(--line);
+      padding-top:14px;
+    }
+
+    .group-title{
+      margin:0 0 14px 0;
+      font-size:13px;
+      font-weight:normal;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.06em;
+    }
+
+    /* Inneres Grid pro Gruppe */
+    .group-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+      gap:18px;
+    }
+
+    /* Ziel: auf Desktop 5 nebeneinander */
+    @media (min-width: 1100px){
+      .group-grid{ grid-template-columns:repeat(5, minmax(0, 1fr)); }
+    }
+    @media (min-width: 900px) and (max-width: 1099px){
+      .group-grid{ grid-template-columns:repeat(4, minmax(0, 1fr)); }
+    }
+    @media (min-width: 680px) and (max-width: 899px){
+      .group-grid{ grid-template-columns:repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 679px){
+      .group-grid{ grid-template-columns:repeat(2, minmax(0, 1fr)); }
+    }
+
+    figure{ margin:0; }
+
+    img{
+    width:100%;
+    height:200px;
+    display:block;
+    object-fit:cover;
+    object-position:50% 20%;
+    filter:grayscale(100%) contrast(1.05);
+    border:1px solid var(--line);
+    }
+
+    }
+
+    figcaption{
+      margin-top:6px;
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.35;
+    }
+
+    figcaption b{
+      display:block;
+      font-weight:normal;
+      color:var(--fg);
+    }
+
+    footer{
+      margin-top:60px;
+      font-size:13px;
+      color:var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <nav id="topnav">
+    <a href="../index.html">marsbesiedlung</a>
+    <a href="../index.html#mondbasen">mondbasen</a>
+    <a href="../index.html#off-world-oekonomie">off-world-oekonomie</a>
+    <a href="../index.html#ethik">ethik</a>
+    <a href="../index.html#technologie">technologie</a>
+    <a href="../index.html#institutionen">institutionen</a>
+    <a href="../index.html#universitaeten">universitaeten</a>
+    <a href="../index.html#thinktanks">thinktanks</a>
+    <a href="index.html">einzelpersonen</a>
+  </nav>
+
+  <h1>einzelpersonen</h1>
+
+  <div class="controls" role="group" aria-label="Sortierung">
+    <span>sortierung:</span>
+    <button id="sort-alpha" type="button" aria-pressed="true">alphabetisch</button>
+    <button id="sort-chrono" type="button" aria-pressed="false">chronologisch</button>
+  </div>
+
+  <div class="az" id="az" aria-label="A bis Z"></div>
+
+  <section class="portrait-grid" id="grid"></section>
+
+  <footer>
+    Archivische Porträts. Schwarzweiß. Sortier- und Sprungnavigation.
+  </footer>
+
+</div>
+
+<script src="data.js"></script>
+
+<script>
+  const grid = document.getElementById("grid");
+  const az = document.getElementById("az");
+  const btnAlpha = document.getElementById("sort-alpha");
+  const btnChrono = document.getElementById("sort-chrono");
+  const topnav = document.getElementById("topnav");
+
+  function normalizeName(s){
+    return (s || "")
+      .toLowerCase()
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function birthYearFromLife(life){
+    const m = String(life || "").match(/(\d{4})/);
+    return m ? parseInt(m[1], 10) : Number.POSITIVE_INFINITY;
+  }
+
+  function groupKeyFromName(name){
+    const n = normalizeName(name);
+    if(!n) return "#";
+    const ch = n[0].toUpperCase();
+    return /[A-Z]/.test(ch) ? ch : "#";
+  }
+
+  function setPressed(mode){
+    const isAlpha = mode === "alpha";
+    btnAlpha.setAttribute("aria-pressed", String(isAlpha));
+    btnChrono.setAttribute("aria-pressed", String(!isAlpha));
+  }
+
+  function buildAZ(presentKeys){
+    az.innerHTML = "";
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    const frag = document.createDocumentFragment();
+
+    letters.forEach(L => {
+      const link = document.createElement("a");
+      link.textContent = L;
+
+      const exists = presentKeys.has(L);
+      if(exists){
+        link.href = `#group-${L}`;
+      } else {
+        link.href = "#";
+        link.setAttribute("aria-disabled", "true");
+      }
+
+      frag.appendChild(link);
+    });
+
+    // optional: # Gruppe, falls gebraucht
+    if(presentKeys.has("#")){
+      const link = document.createElement("a");
+      link.textContent = "#";
+      link.href = "#group-hash";
+      frag.appendChild(link);
+    }
+
+    az.appendChild(frag);
+
+    // smooth-ish scroll with offset under nav
+    az.querySelectorAll('a[href^="#group-"]').forEach(a => {
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        const id = a.getAttribute("href").slice(1);
+        const el = document.getElementById(id);
+        if(!el) return;
+
+        const navH = topnav.getBoundingClientRect().height;
+        const y = el.getBoundingClientRect().top + window.scrollY - navH - 12;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      });
+    });
+  }
+
+  function renderGrouped(list){
+    grid.innerHTML = "";
+
+    // Gruppen bilden
+    const groups = new Map();
+    list.forEach(p => {
+      const k = groupKeyFromName(p.name);
+      if(!groups.has(k)) groups.set(k, []);
+      groups.get(k).push(p);
+    });
+
+    // Keys sortieren (# am Ende)
+    const keys = [...groups.keys()].sort((a,b) => {
+      if(a === "#") return 1;
+      if(b === "#") return -1;
+      return a.localeCompare(b);
+    });
+
+    // A–Z bauen (nur vorhandene aktiv)
+    buildAZ(new Set(keys));
+
+    // DOM bauen
+    const frag = document.createDocumentFragment();
+
+    keys.forEach(k => {
+      const section = document.createElement("section");
+      section.className = "group";
+      section.id = (k === "#") ? "group-hash" : `group-${k}`;
+
+      const title = document.createElement("h2");
+      title.className = "group-title";
+      title.textContent = k;
+      section.appendChild(title);
+
+      const inner = document.createElement("div");
+      inner.className = "group-grid";
+
+      groups.get(k).forEach(p => {
+        const fig = document.createElement("figure");
+        fig.innerHTML = `
+          <img loading="lazy" src="${p.image}" alt="${p.name}">
+          <figcaption>
+            <b>${p.name}</b>
+            ${p.life || ""}
+          </figcaption>
+        `;
+        inner.appendChild(fig);
+      });
+
+      section.appendChild(inner);
+      frag.appendChild(section);
+    });
+
+    grid.appendChild(frag);
+  }
+
+  function sortList(mode){
+    const list = [...people];
+
+    if(mode === "chrono"){
+      list.sort((a,b) => {
+        const ya = birthYearFromLife(a.life);
+        const yb = birthYearFromLife(b.life);
+        if(ya !== yb) return ya - yb;
+        return normalizeName(a.name).localeCompare(normalizeName(b.name), "de");
+      });
+    } else {
+      list.sort((a,b) =>
+        normalizeName(a.name).localeCompare(normalizeName(b.name), "de")
+      );
+    }
+
+    return list;
+  }
+
+  function sortAndRender(mode){
+    localStorage.setItem("peopleSortMode", mode);
+    setPressed(mode);
+
+    const list = sortList(mode);
+
+    // Hinweis: Gruppen bleiben A–Z (auch in Chrono-Ansicht),
+    // innerhalb der Gruppen ist die Reihenfolge chronologisch oder alphabetisch.
+    // -> Dadurch bleibt das A–Z-Menü immer sinnvoll nutzbar.
+    if(mode === "chrono"){
+      // inner-halb der Buchstabengruppe nach Geburt sortieren
+      // (die globale Sortierung oben sortiert schon nach Jahr,
+      // aber wir müssen pro Gruppe neu stabilisieren)
+      const byLetter = new Map();
+      list.forEach(p => {
+        const k = groupKeyFromName(p.name);
+        if(!byLetter.has(k)) byLetter.set(k, []);
+        byLetter.get(k).push(p);
+      });
+
+      const merged = [];
+      const keys = [...byLetter.keys()].sort((a,b)=> {
+        if(a === "#") return 1;
+        if(b === "#") return -1;
+        return a.localeCompare(b);
+      });
+
+      keys.forEach(k => {
+        byLetter.get(k).sort((a,b) => {
+          const ya = birthYearFromLife(a.life);
+          const yb = birthYearFromLife(b.life);
+          if(ya !== yb) return ya - yb;
+          return normalizeName(a.name).localeCompare(normalizeName(b.name), "de");
+        });
+        merged.push(...byLetter.get(k));
+      });
+
+      renderGrouped(merged);
+      return;
+    }
+
+    renderGrouped(list);
+  }
+
+  // Init
+  const saved = localStorage.getItem("peopleSortMode");
+  const initialMode = (saved === "chrono" || saved === "alpha") ? saved : "alpha";
+
+  btnAlpha.addEventListener("click", () => sortAndRender("alpha"));
+  btnChrono.addEventListener("click", () => sortAndRender("chrono"));
+
+  sortAndRender(initialMode);
+</script>
+
+</body>
+</html>

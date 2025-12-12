@@ -1,0 +1,49 @@
+:root{
+      --bg:#000;
+      --fg:#fff;
+      --muted:#bbb;
+      --line:#333;
+      --max:1200px;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--fg);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size:14px;
+      line-height:1.4;
+
+    }
+
+    a{ color:var(--fg); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+
+     .wrap{
+     max-width:none;
+     margin:0;
+     padding:14px 20px 80px;
+     overflow:hidden;
+     }
+
+
+    nav{
+      display:flex;
+      flex-wrap:wrap;
+      gap:18px;
+      margin-bottom:18px;
+    }
+
+    h1{
+      font-size:15px;
+      font-weight:normal;
+      margin:0 0 10px 0;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+
+   h1, h2, h3, p, ul, ol, pre{
+   margin-top: 0;
+   }
