@@ -7,6 +7,6 @@ const people = [
   {
     name: "Muchio Kaku",
     life: "1947–....",
-    image: "images/kaku.jpg"
+    image: "images/Kaku.jpg"
   },
 ];
