@@ -9,4 +9,9 @@ const people = [
     life: "1947–....",
     image: "images/Kaku.jpg"
   },
+  {
+    name: "Robert Zubrin",
+    life: "1952–....",
+    image: "images/zubrin.jpg"
+  },
 ];
