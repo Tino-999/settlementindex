@@ -1,217 +1,207 @@
-README — settlementindex
-Programmierlogik & Seitenarchitektur
+/*
+===============================================================================
+Planetary Settlement Index
+ARCHITEKTUR- & LOGIK-README
+===============================================================================
 
-────────────────────────────────────────────────────────
-0) Überblick
-────────────────────────────────────────────────────────
-Diese Website ist vollständig statisch.
-Kein Framework, kein Build-Schritt, kein Backend.
+Ziel
+----
+Diese Website ist ein statisches, datengetriebenes Informationsarchiv
+zur menschlichen Besiedlung des Weltraums.
 
-Start lokal:
-python -m http.server 8000
+Schwerpunkte:
+- Mars, Mond, Off-World-Ökonomie
+- Ethik, Technologie, Institutionen
+- Filme & Literatur
+- Einzelpersonen (Autoren, Ingenieure, Denker)
 
-Ziele der Architektur:
-- maximale Einfachheit
-- zentrale Navigation (Single Source of Truth)
-- datengetriebene Inhalte
-- stabile Deep-Links zwischen Seiten
-- langfristig wartbar (auch für KI-Generierung)
+Designprinzip:
+- Minimalistisch
+- Text-first
+- Keine Frameworks
+- Vollständig statisch (GitHub Pages kompatibel)
 
-────────────────────────────────────────────────────────
-1) Projektstruktur
-────────────────────────────────────────────────────────
-/index.html
-/style.css
 
-/ethik.html
-/images/...
+===============================================================================
+ORDNERSTRUKTUR
+===============================================================================
 
-/people/
-  index.html
-  data.js
-  /images/...
+/ (root)
+│
+├─ index.html          -> Hauptseite (Kapitelübersicht, Langtext, Anker)
+├─ ethik.html          -> Visuelle Kapitel-Seite (Hero + Panels)
+├─ nav.html            -> Zentrale Navigation (EINMAL definieren)
+│
+├─ shared/
+│   └─ site.css        -> Globales Styling (Farben, Typo, Basislayout)
+│
+├─ movies/
+│   ├─ index.html      -> Filme & Dokus (Grid, Sortierung)
+│   ├─ data.js         -> Datensatz der Filme
+│   └─ images/         -> Filmstills / Poster
+│
+├─ people/
+│   ├─ index.html      -> Einzelpersonen (Grid, Sortierung)
+│   ├─ data.js         -> Datensatz der Personen
+│   ├─ add-person.mjs  -> Node-Script zum Ergänzen neuer Personen
+│   └─ images/         -> Portraits
+│
+└─ readme.txt          -> Diese Datei
 
-/movies/
-  index.html
-  data.js
-  /images/...
 
-/shared/
-  site.css
-  nav.html
+===============================================================================
+NAVIGATION (ZENTRALER MECHANISMUS)
+===============================================================================
 
-Bedeutung:
-- site.css        → globale Styles
-- style.css       → seiten­spezifische Styles
-- nav.html        → zentrale Navigation
-- data.js         → reine Inhaltsdaten
-- index.html      → Rendering + Logik
+Problem:
+- Mehrere HTML-Seiten
+- Navigation soll überall identisch sein
+- KEINE Server-Logik, KEIN Framework
 
-────────────────────────────────────────────────────────
-2) Zentrale Navigation (Variante A)
-────────────────────────────────────────────────────────
-Die Navigation existiert genau einmal:
+Lösung:
+- nav.html enthält NUR die Navigation
+- Jede Seite lädt nav.html per fetch()
 
-/shared/nav.html
-
-Alle Seiten laden sie dynamisch:
-
+Beispiel (in jeder HTML-Seite):
+--------------------------------
 <div id="nav-placeholder"></div>
 
-Script (Pfad abhängig von Seitenebene):
+<script>
+  fetch("nav.html")          // oder "../nav.html" je nach Ordner
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById("nav-placeholder").innerHTML = html;
+    });
+</script>
 
-fetch("shared/nav.html")        // Root-Seiten
-fetch("../shared/nav.html")     // Unterordner
+WICHTIG:
+- Root-Seiten (index.html, ethik.html): fetch("nav.html")
+- Unterordner (movies/, people/): fetch("../nav.html")
 
-.then(r => r.text())
-.then(html => {
-  document.getElementById("nav-placeholder").innerHTML = html;
-});
 
-nav.html enthält:
+===============================================================================
+nav.html (INHALTLICH)
+===============================================================================
 
-<nav id="topnav">
-  ...
-</nav>
+- Enthält ausschließlich <nav id="topnav">
+- Alle Links sind RELATIV ZUM ROOT gesetzt
 
-id="topnav" ist wichtig für Scroll-Offsets.
+Beispiel:
+---------
+<a href="/settlementindex/index.html#marsbesiedlung">marsbesiedlung</a>
+<a href="/settlementindex/ethik.html">ethik</a>
+<a href="/settlementindex/movies/">filme</a>
+<a href="/settlementindex/people/">einzelpersonen</a>
 
-────────────────────────────────────────────────────────
-3) Datenmodell (data.js)
-────────────────────────────────────────────────────────
-Alle Inhalte sind datengetrieben.
-Kein HTML wird manuell dupliziert.
+Warum absoluter Pfad?
+- GitHub Pages läuft unter /settlementindex/
+- Verhindert Pfadfehler bei Unterseiten
 
-people/data.js:
 
-const people = [
-  {
-    name: "Robert Silverberg",
-    life: "1935–",
-    image: "images/silverberg.jpg",
-    wiki: "https://en.wikipedia.org/wiki/Robert_Silverberg",
-    role: "Science-Fiction-Autor",
-    knownFor: "Planetare Zivilisationen",
-    slug: "robert-silverberg"
-  }
-];
+===============================================================================
+DATENGETRIEBENE SEITEN
+===============================================================================
 
-movies/data.js:
+movies/index.html
+-----------------
+- Lädt movies/data.js
+- data.js definiert: const people = [...]
+- JS rendert Grid dynamisch
+- Sortierung:
+  - alphabetisch
+  - chronologisch
+- A–Z Sprungnavigation
+- Verlinkung:
+  - Buch (Wikipedia)
+  - Autor → people/index.html#slug
 
-const people = [
-  {
-    name: "Passengers",
-    life: "2016",
-    image: "images/passengers.avif",
-    wiki: "https://en.wikipedia.org/wiki/Passengers_(2016_film)",
+people/index.html
+-----------------
+- Lädt people/data.js
+- Sortierung:
+  - nach Nachname
+  - nach Rolle
+- Dynamische Gruppen (A–Z oder Rollen)
+- Jeder Eintrag hat:
+  - slug (für Deep-Links)
+  - Bild
+  - Lebensdaten
+  - Rolle
+  - knownFor
 
-    book: "Passengers",
-    bookYear: "1969",
-    bookWiki: "https://en.wikipedia.org/wiki/Passengers_(novel)",
 
-    authorName: "Robert Silverberg",
-    authorSlug: "robert-silverberg"
-  }
-];
+===============================================================================
+SLUG-LOGIK
+===============================================================================
 
-Hinweis:
-Das Array heißt bewusst überall "people".
-Die Rendering-Logik erwartet diesen Namen.
+Slug = URL-Anker für Verlinkung zwischen Seiten
 
-────────────────────────────────────────────────────────
-4) Rendering-Pipeline
-────────────────────────────────────────────────────────
-Ablauf pro Seite:
+Erzeugung:
+----------
+- Kleinbuchstaben
+- Umlaute entfernt
+- Leerzeichen → "-"
+- Sonderzeichen entfernt
 
-1) data.js laden
-2) Sortiermodus aus localStorage lesen
-3) Daten kopieren (immutabel)
-4) Gruppierung erzeugen (Map)
-5) Sortierung anwenden
-6) Jump-Navigation bauen
-7) DOM rendern
+Beispiel:
+---------
+"Robert Silverberg" -> robert-silverberg
 
-Kein direkter HTML-Text im Code,
-alles entsteht aus Daten.
-
-────────────────────────────────────────────────────────
-5) Sortierlogik
-────────────────────────────────────────────────────────
-People:
-- surname → Nachname (A–Z)
-- role    → Rolle (Autor, Physiker, Ingenieur)
-
-localStorage:
-peopleSortMode = "surname" | "role"
-
-Movies:
-- alpha  → alphabetisch
-- chrono → Erscheinungsjahr
-
-localStorage:
-moviesSortMode = "alpha" | "chrono"
-
-Der Modus bleibt seitenübergreifend erhalten.
-
-────────────────────────────────────────────────────────
-6) Gruppierung & Jump-Navigation
-────────────────────────────────────────────────────────
-Gruppierung:
-
-Map {
-  "A" → [Einträge...]
-  "B" → [Einträge...]
-}
-
-Jump-Leiste:
-A B C D … Z #
-
-Deaktivierte Buchstaben sind klicklos.
-
-────────────────────────────────────────────────────────
-7) Slugs & Deep-Links
-────────────────────────────────────────────────────────
-Filme verlinken auf Personen:
-
+Filme verlinken Autoren so:
+---------------------------
 ../people/index.html#robert-silverberg
 
-Dafür:
-- jede Person hat einen festen slug
-- figure.id = slug
 
-Slugs sind stabil und manuell gepflegt.
+===============================================================================
+STYLING
+===============================================================================
 
-────────────────────────────────────────────────────────
-8) Scroll-Offset (wegen Navigation)
-────────────────────────────────────────────────────────
-Beim Klick auf Jump-Links:
+shared/site.css
+---------------
+- Dark Mode fix
+- Monospace
+- Keine Animationen
+- Kontrastreich
+- Print-ähnliche Ästhetik
 
-navHeight = topnav.getBoundingClientRect().height
-targetY = elementTop - navHeight - 12
+Seiten-spezifisches CSS:
+------------------------
+- index.html: klassischer <pre>-Stil
+- ethik.html: Fullscreen Panels + Bilder
+- movies / people: Grid-Layouts
 
-Verhindert, dass Überschriften
-unter der Navigation verschwinden.
 
-────────────────────────────────────────────────────────
-9) Erweiterung um neue Bereiche
-────────────────────────────────────────────────────────
-Beispiel: /books/
+===============================================================================
+GITHUB PAGES
+===============================================================================
 
-1) Ordner anlegen
-2) index.html von movies kopieren
-3) data.js definieren
-4) Link in shared/nav.html ergänzen
+Repository:
+-----------
+https://github.com/Tino-999/settlementindex
 
-Keine weiteren Änderungen nötig.
+Live:
+-----
+https://tino-999.github.io/settlementindex/
 
-────────────────────────────────────────────────────────
-10) Grundprinzipien
-────────────────────────────────────────────────────────
-- statisch statt komplex
-- Daten vor Layout
-- Navigation nur einmal
-- keine Framework-Abhängigkeit
-- vorhersehbares Verhalten
-- maschinenlesbar + menschlich lesbar
+Wichtig:
+--------
+- KEINE führenden "/" außerhalb von /settlementindex/
+- fetch() funktioniert auf GitHub Pages
+- Bei Problemen: Hard Reload (Ctrl+F5)
 
-Ende der README
+
+===============================================================================
+DESIGNPHILOSOPHIE
+===============================================================================
+
+- Inhalte sind wichtiger als Technik
+- Texte sollen wie Archivmaterial wirken
+- Keine Interaktion ohne inhaltlichen Mehrwert
+- Navigation ist Werkzeug, kein Feature
+- Die Seite soll auch in 10 Jahren noch lesbar sein
+
+
+===============================================================================
+ENDE
+===============================================================================
+*/
