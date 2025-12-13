@@ -92,7 +92,7 @@
 
 <body>
   <div class="wrap">
-<pre><a id="id"></a><div id="nav-placeholder"></div>
+<pre><a id="id"></a><span id="nav-placeholder"></span>
 </pre>
 
 <div class="after-header-gap"></div>
@@ -149,17 +149,29 @@
 
   </div>
 
-  <!-- NAVIGATION LADEN (wie bei index.html) -->
+  <!-- NAVIGATION LADEN (funktioniert lokal + auf GitHub Pages) -->
   <script>
-    fetch("/nav.html")
-      .then(r => {
-        if (!r.ok) throw new Error("nav.html nicht gefunden");
-        return r.text();
-      })
-      .then(html => {
-        document.getElementById("nav-placeholder").innerHTML = html;
-      })
-      .catch(err => console.error(err));
+    (function () {
+      const target = document.getElementById("nav-placeholder");
+      if (!target) return;
+
+      // WICHTIG: auf GitHub Pages funktioniert "/nav.html" nicht zuverlässig (Repo-Subpath),
+      // darum relative Pfade probieren.
+      const candidates = ["nav.html", "./nav.html", "../nav.html", "../../nav.html"];
+
+      (async () => {
+        for (const url of candidates) {
+          try {
+            const res = await fetch(url, { cache: "no-store" });
+            if (!res.ok) continue;
+            const html = (await res.text()).trim();
+            target.innerHTML = html;
+            return;
+          } catch (e) {}
+        }
+        console.error("nav.html nicht gefunden (relative Pfade geprüft).");
+      })();
+    })();
   </script>
 </body>
 </html>

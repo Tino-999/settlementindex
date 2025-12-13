@@ -8,17 +8,26 @@
   <!-- global -->
   <link rel="stylesheet" href="shared/site.css">
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* nav im <pre>-Block: gleiche Optik wie vorher */
+    #topnav{
+      display:inline;
+      white-space: normal;
+    }
+    #topnav a{ display:inline; }
+    #topnav a + a{ margin-left: 18px; }
+  </style>
 </head>
 
 <body>
 <div class="wrap">
-<pre><a id="id"></a>
-<div id="nav-placeholder"></div>
+<pre><a id="id"></a><span id="nav-placeholder"></span>
 
 CHAPTER 1 — MARSBESIEDLUNG           [<a href="#id">index</a>]
 <a id="marsbesiedlung"></a>
 
-Der Mars ist der erste Ort, an dem die Menschheit versucht, aus einer Idee ein Leben zu machen. 
+Der Mars ist der erste Ort, an dem die Menschheit versucht, aus einer Idee ein Leben zu machen.
 Er ist nah genug, um erreichbar zu wirken, und fremd genug, um uns an unsere Grenzen zu erinnern.
 
 Seit den 1950er-Jahren, als Wernher von Braun eine Marsflotte für rund 70 Menschen entwarf, gilt eine bemannte Marsmission als großes Ziel der Raumforschung. Trotz über tausend Studien stehen wir bis heute erst am Anfang der Planung.
@@ -39,11 +48,11 @@ Wichtige Institutionen:
 <a href="https://www.dlr.de/pf">DLR Institut für Planetenforschung</a> (Deutschland)
 
 Zeitlicher Status:
-2024–2026: Starship-Tests, robotische Marsmissionen.  
-2026–2028: Bemannte Artemis-Missionen in Mondnähe, Mars-Vorbereitung.  
-2028–2032: Energie- und Habitat-Demonstratoren.  
-2032–2035: Erste Mars-Vorbereitungsmission realistisch.  
-2035–2040: Bemannte Marsmission wahrscheinlich.  
+2024–2026: Starship-Tests, robotische Marsmissionen.
+2026–2028: Bemannte Artemis-Missionen in Mondnähe, Mars-Vorbereitung.
+2028–2032: Energie- und Habitat-Demonstratoren.
+2032–2035: Erste Mars-Vorbereitungsmission realistisch.
+2035–2040: Bemannte Marsmission wahrscheinlich.
 2040+: Aufbau kleiner Forschungssiedlungen denkbar.
 
 Zentrale Frage:
@@ -55,8 +64,6 @@ Lesen:
 
 Ein Satz, der bleibt:
 Wir gehen dorthin nicht, weil es leicht ist, sondern weil es das Denken über uns selbst verändert.
-
-
 
 
 
@@ -93,8 +100,6 @@ Der Mond ist die Probe, bevor das Leben im All beginnt.
 
 
 
-
-
 CHAPTER 3 — OFF-WORLD-OEKONOMIE UND POLITIK        [<a href="#id">index</a>]
 <a id="offworld"></a>
 
@@ -126,8 +131,6 @@ Im All entsteht Ordnung nicht aus Macht – sondern aus Vereinbarung.
 
 
 
-
-
 CHAPTER 4 — ETHIK PHILOSOPHIE RELIGION IM ALL     [<a href="#id">index</a>]
 <a id="ethik"></a>
 
@@ -149,21 +152,30 @@ Lesen:
 
 Ein Satz, der bleibt:
 Neue Welten brauchen neue Vorsicht.
-
 </pre>
 </div>
 
-<!-- NAVIGATION LADEN (Variante A) -->
+<!-- NAVIGATION LADEN (Variante A, GitHub Pages + lokal) -->
 <script>
-  fetch("/nav.html")
-    .then(r => {
-      if (!r.ok) throw new Error("nav.html nicht gefunden");
-      return r.text();
-    })
-    .then(html => {
-      document.getElementById("nav-placeholder").innerHTML = html;
-    })
-    .catch(err => console.error(err));
+  (function () {
+    const target = document.getElementById("nav-placeholder");
+    if (!target) return;
+
+    const candidates = ["nav.html", "./nav.html", "../nav.html", "../../nav.html"];
+
+    (async () => {
+      for (const url of candidates) {
+        try {
+          const res = await fetch(url, { cache: "no-store" });
+          if (!res.ok) continue;
+          const html = (await res.text()).trim();
+          target.innerHTML = html;
+          return;
+        } catch (e) {}
+      }
+      console.error("nav.html nicht gefunden (relative Pfade geprüft).");
+    })();
+  })();
 </script>
 
 </body>
