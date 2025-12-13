@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Planetary Settlement Index — Ethik</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* SpaceX-artige Bildsektionen, aber ohne deine Wrap-Offsets zu zerstören */
+    .hero, .panel{
+      position: relative;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Wichtig: KEIN eigenes left/top padding mehr – das kommt von .wrap / <pre> */
+    .panel-inner{
+      position: relative;
+      z-index: 2;
+      max-width: 72ch;
+      padding: 0; /* übernimmt deine Grundlogik */
+    }
+
+    .panel img{
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      filter: contrast(1.02);
+    }
+
+    .overlay{
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(to bottom, rgba(0,0,0,.25), rgba(0,0,0,.80));
+    }
+
+    .kicker{
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-size: 12px;
+      opacity: .75;
+      margin-bottom: 10px;
+    }
+
+    h1{
+      margin: 0 0 14px;
+      font-size: clamp(34px, 6vw, 64px);
+      line-height: 1.05;
+    }
+
+    h2{
+      margin: 0 0 10px;
+      font-size: clamp(22px, 3.2vw, 34px);
+      line-height: 1.15;
+    }
+
+    .lead{
+      margin: 0;
+      line-height: 1.6;
+      opacity: .85;
+      font-size: 18px;
+    }
+
+    /* Damit dein Header im <pre> oben nicht von Bildern "weggezogen" wird */
+    .wrap{ position: relative; z-index: 5; }
+
+    /* Optional: Abstand zwischen Header-<pre> und erster Bildsektion */
+    .after-header-gap{ height: 10px; }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+<pre><a id="id"></a><a href="index.html#marsbesiedlung">marsbesiedlung</a>   <a href="index.html#mondbasen">mondbasen</a>   <a href="index.html#offworld">off-world-oekonomie</a>    <a href="ethik.html">ethik</a>   <a href="index.html#technologie">technologie</a>   <a href="index.html#institutionen">institutionen</a>   <a href="index.html#unis">universitaeten</a>   <a href="index.html#thinktanks">thinktanks</a>   <a href="people/index.html">einzelpersonen</a>
+</pre>
+
+<div class="after-header-gap"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <img src="images/resilient.webp" alt="Resiliente Infrastruktur">
+  <div class="overlay"></div>
+  <div class="panel-inner">
+    <div class="kicker">chapter — ethik</div>
+    <h1>Ethik im Orbit</h1>
+    <p class="lead">
+      Technologie im Weltraum ist niemals neutral.
+      Sie skaliert Reichweite, Abhängigkeiten und Macht – oft schneller als Regeln.
+    </p>
+  </div>
+</section>
+
+<!-- PANEL 1 -->
+<section class="panel">
+  <img src="images/capacity.webp" alt="Skalierung und Kapazität">
+  <div class="overlay"></div>
+  <div class="panel-inner">
+    <h2>Skalierung erzeugt Verantwortung</h2>
+    <p class="lead">
+      Was global skaliert, skaliert auch Fehler, Missbrauch und geopolitische Wirkungen.
+    </p>
+  </div>
+</section>
+
+<!-- PANEL 2 -->
+<section class="panel">
+  <img src="images/modular-design.webp" alt="Modulares Design">
+  <div class="overlay"></div>
+  <div class="panel-inner">
+    <h2>Ethik beginnt im Design</h2>
+    <p class="lead">
+      Zugriff, Abschaltung, Priorisierung: Governance ist keine Zusatzfunktion – sie ist Architektur.
+    </p>
+  </div>
+</section>
+
+<!-- PANEL 3 -->
+<section class="panel">
+  <img src="images/rapid-development.webp" alt="Schnelle Entwicklung">
+  <div class="overlay"></div>
+  <div class="panel-inner">
+    <h2>Offene Fragen</h2>
+    <p class="lead">
+      Wer entscheidet über Nutzung? Wo liegen Grenzen? Wer trägt Verantwortung, wenn Regeln fehlen?
+    </p>
+  </div>
+</section>
+
+  </div>
+</body>
+</html>
