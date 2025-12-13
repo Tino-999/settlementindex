@@ -1,24 +1,29 @@
-// shared/nav.js
-(async function () {
-  const placeholder =
-    document.getElementById("nav-placeholder") ||
-    document.getElementById("topnav");
-
+(function () {
+  const placeholder = document.getElementById("nav-placeholder");
   if (!placeholder) return;
 
-  const candidates = ["nav.html", "../nav.html", "../../nav.html", "../../../nav.html"];
+  // Erkennt GitHub Pages automatisch
+  const isGitHubPages = location.hostname.endsWith("github.io");
 
-  for (const url of candidates) {
-    try {
-      const res = await fetch(url, { cache: "no-store" });
-      if (!res.ok) continue;
+  // Basis-Pfad bestimmen
+  // lokal: /
+  // GitHub Pages: /settlementindex/
+  const basePath = isGitHubPages ? "/settlementindex/" : "/";
 
-      const html = (await res.text()).trim();
-      const finalHtml = /^<nav[\s>]/i.test(html) ? html : `<nav id="topnav">${html}</nav>`;
-      placeholder.innerHTML = finalHtml;
-      return;
-    } catch (_) {}
-  }
+  // Pfad zu nav.html korrekt auflösen
+  const navUrl = basePath + "nav.html";
 
-  placeholder.textContent = "nav missing (nav.html not found)";
+  fetch(navUrl)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("nav.html nicht gefunden unter " + navUrl);
+      }
+      return response.text();
+    })
+    .then(html => {
+      placeholder.innerHTML = html;
+    })
+    .catch(err => {
+      console.error("Navigation konnte nicht geladen werden:", err);
+    });
 })();

@@ -5,8 +5,19 @@
   <title>Einzelpersonen · settlement index</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <!-- GitHub Pages Projektpfad automatisch setzen -->
+  <script>
+    (function () {
+      const isGitHubPages = location.hostname.endsWith("github.io");
+      const basePath = isGitHubPages ? "/settlementindex/" : "/";
+      const base = document.createElement("base");
+      base.href = basePath;
+      document.head.prepend(base);
+    })();
+  </script>
+
   <!-- global (shared) -->
-  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="shared/site.css">
 
   <style>
     :root{ --bg:#000; --fg:#fff; --muted:#bbb; --line:#333; }
@@ -86,7 +97,6 @@
 <body>
 <div class="wrap">
 
-  <!-- NAV (ausgelagert) -->
   <div id="nav-placeholder"></div>
 
   <h1>EINZELPERSONEN</h1>
@@ -108,15 +118,14 @@
 
 </div>
 
-<!-- NAV laden (relativ, damit es auch unter /people/ funktioniert) -->
 <script>
-  fetch("../nav.html")
+  fetch("nav.html")
     .then(r => { if(!r.ok) throw new Error("nav.html nicht gefunden"); return r.text(); })
     .then(html => { document.getElementById("nav-placeholder").innerHTML = html; })
-    .catch(err => console.error(err));
+    .catch(console.error);
 </script>
 
-<script src="data.js"></script>
+<script src="people/data.js"></script>
 
 <script>
   const grid = document.getElementById("grid");
@@ -231,6 +240,18 @@
     smoothJump(jumpRoles, 'a[href^="#role-"]');
   }
 
+  function resolvePeopleImagePath(p){
+    const raw = String(p.image || "");
+    if (!raw) return raw;
+    if (/^(https?:)?\/\//.test(raw)) return raw;
+    if (raw.startsWith("/")) return raw;
+
+    // falls data.js noch "images/..." nutzt
+    if (raw.startsWith("images/")) return "people/" + raw;
+
+    return raw;
+  }
+
   function renderGroups(groups, keys, sectionIdFn, titleFn){
     grid.innerHTML = "";
     const frag = document.createDocumentFragment();
@@ -250,16 +271,17 @@
 
       groups.get(k).forEach(p => {
         const fig = document.createElement("figure");
-        // Anchor für #slug (z.B. aus movies)
         fig.id = p.slug ? String(p.slug) : slugify(cleanNameForSorting(p.name));
+
+        const imgSrc = resolvePeopleImagePath(p);
 
         fig.innerHTML = `
           ${p.wiki ? `
             <a href="${p.wiki}" target="_blank" rel="noopener">
-              <img loading="lazy" src="${p.image}" alt="${p.name}">
+              <img loading="lazy" src="${imgSrc}" alt="${p.name}">
             </a>
           ` : `
-            <img loading="lazy" src="${p.image}" alt="${p.name}">
+            <img loading="lazy" src="${imgSrc}" alt="${p.name}">
           `}
 
           <figcaption>

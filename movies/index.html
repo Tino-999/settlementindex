@@ -5,8 +5,19 @@
   <title>Filme · settlement index</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <!-- GitHub Pages Projektpfad automatisch setzen -->
+  <script>
+    (function () {
+      const isGitHubPages = location.hostname.endsWith("github.io");
+      const basePath = isGitHubPages ? "/settlementindex/" : "/";
+      const base = document.createElement("base");
+      base.href = basePath;
+      document.head.prepend(base);
+    })();
+  </script>
+
   <!-- global (shared) -->
-  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="shared/site.css">
 
   <style>
     :root{ --bg:#000; --fg:#fff; --muted:#bbb; --line:#333; }
@@ -85,7 +96,6 @@
 <body>
 <div class="wrap">
 
-  <!-- NAV (ausgelagert) -->
   <div id="nav-placeholder"></div>
 
   <h1>FILME & DOKUMENTATIONEN</h1>
@@ -106,15 +116,16 @@
 
 </div>
 
-<script src="data.js"></script>
-
 <script>
-  // NAV laden (relativ, damit es auch unter /filme/ funktioniert)
-  fetch("../nav.html")
+  fetch("nav.html")
     .then(r => { if(!r.ok) throw new Error("nav.html nicht gefunden"); return r.text(); })
     .then(html => { document.getElementById("nav-placeholder").innerHTML = html; })
-    .catch(err => console.error(err));
+    .catch(console.error);
+</script>
 
+<script src="movies/data.js"></script>
+
+<script>
   const grid = document.getElementById("grid");
   const az = document.getElementById("az");
   const btnAlpha = document.getElementById("sort-alpha");
@@ -173,7 +184,6 @@
 
     az.appendChild(frag);
 
-    // Smooth scroll mit Nav-Offset (Nav erst NACH fetch vorhanden!)
     az.querySelectorAll('a[href^="#group-"]').forEach(a => {
       a.addEventListener("click", (e) => {
         e.preventDefault();
@@ -188,6 +198,19 @@
         window.scrollTo({ top: y, behavior: "smooth" });
       });
     });
+  }
+
+  function resolveMovieImagePath(p){
+    const raw = String(p.image || "");
+    if (!raw) return raw;
+    if (/^(https?:)?\/\//.test(raw)) return raw;
+    if (raw.startsWith("/")) return raw;
+
+    // falls data.js noch "images/..." nutzt
+    if (raw.startsWith("images/")) return "movies/" + raw;
+
+    // falls irgendwann absolute project-relative Pfade kommen
+    return raw;
   }
 
   function renderGrouped(list){
@@ -227,16 +250,18 @@
         const fig = document.createElement("figure");
 
         const authorLine = (p.authorSlug && p.authorName)
-          ? `<a href="../people/index.html#${p.authorSlug}">${p.authorName}</a>`
+          ? `<a href="people/index.html#${p.authorSlug}">${p.authorName}</a>`
           : (p.authorName || "");
+
+        const imgSrc = resolveMovieImagePath(p);
 
         fig.innerHTML = `
           ${p.wiki ? `
             <a href="${p.wiki}" target="_blank" rel="noopener">
-              <img loading="lazy" src="${p.image}" alt="${p.name}">
+              <img loading="lazy" src="${imgSrc}" alt="${p.name}">
             </a>
           ` : `
-            <img loading="lazy" src="${p.image}" alt="${p.name}">
+            <img loading="lazy" src="${imgSrc}" alt="${p.name}">
           `}
 
           <figcaption>

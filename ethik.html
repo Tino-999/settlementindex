@@ -5,13 +5,23 @@
   <title>Planetary Settlement Index — Ethik</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- GitHub Pages Projektpfad automatisch setzen -->
+  <script>
+    (function () {
+      const isGitHubPages = location.hostname.endsWith("github.io");
+      const basePath = isGitHubPages ? "/settlementindex/" : "/";
+      const base = document.createElement("base");
+      base.href = basePath;
+      document.head.prepend(base);
+    })();
+  </script>
+
   <!-- global (shared) -->
   <link rel="stylesheet" href="shared/site.css">
   <!-- deine bestehende Seite -->
   <link rel="stylesheet" href="style.css">
 
   <style>
-    /* Bildsektionen */
     .hero, .panel{
       position: relative;
       min-height: 100vh;
@@ -20,7 +30,6 @@
       align-items: center;
     }
 
-    /* wichtig: kein eigenes padding (kommt aus .wrap / deinem Layout) */
     .panel-inner{
       position: relative;
       z-index: 2;
@@ -28,7 +37,7 @@
       padding: 0;
     }
 
-    .panel img{
+    .panel img, .hero img{
       position: absolute;
       inset: 0;
       width: 100%;
@@ -53,7 +62,6 @@
       margin-bottom: 10px;
     }
 
-    /* nur für diese Seite (Hero-Typo) */
     .hero h1{
       margin: 0 0 14px;
       font-size: clamp(34px, 6vw, 64px);
@@ -75,16 +83,13 @@
       font-size: 18px;
     }
 
-    /* damit die Nav nicht "unter" den Bildern verschwindet */
+    /* nav darf nicht hinter Bildern verschwinden */
     .wrap{ position: relative; z-index: 5; }
 
     .after-header-gap{ height: 10px; }
 
-    /* nav im <pre>-Block: gleiche Optik wie vorher */
-    #topnav{
-      display:inline;
-      white-space: normal;
-    }
+    /* nav im <pre>-Block: gleiche Optik */
+    #topnav{ display:inline; white-space: normal; }
     #topnav a{ display:inline; }
     #topnav a + a{ margin-left: 18px; }
   </style>
@@ -97,7 +102,6 @@
 
 <div class="after-header-gap"></div>
 
-<!-- HERO -->
 <section class="hero">
   <img src="images/resilient.webp" alt="Resiliente Infrastruktur">
   <div class="overlay"></div>
@@ -111,7 +115,6 @@
   </div>
 </section>
 
-<!-- PANEL 1 -->
 <section class="panel">
   <img src="images/capacity.webp" alt="Skalierung und Kapazität">
   <div class="overlay"></div>
@@ -123,7 +126,6 @@
   </div>
 </section>
 
-<!-- PANEL 2 -->
 <section class="panel">
   <img src="images/modular-design.webp" alt="Modulares Design">
   <div class="overlay"></div>
@@ -135,7 +137,6 @@
   </div>
 </section>
 
-<!-- PANEL 3 -->
 <section class="panel">
   <img src="images/rapid-development.webp" alt="Schnelle Entwicklung">
   <div class="overlay"></div>
@@ -149,29 +150,11 @@
 
   </div>
 
-  <!-- NAVIGATION LADEN (funktioniert lokal + auf GitHub Pages) -->
-  <script>
-    (function () {
-      const target = document.getElementById("nav-placeholder");
-      if (!target) return;
-
-      // WICHTIG: auf GitHub Pages funktioniert "/nav.html" nicht zuverlässig (Repo-Subpath),
-      // darum relative Pfade probieren.
-      const candidates = ["nav.html", "./nav.html", "../nav.html", "../../nav.html"];
-
-      (async () => {
-        for (const url of candidates) {
-          try {
-            const res = await fetch(url, { cache: "no-store" });
-            if (!res.ok) continue;
-            const html = (await res.text()).trim();
-            target.innerHTML = html;
-            return;
-          } catch (e) {}
-        }
-        console.error("nav.html nicht gefunden (relative Pfade geprüft).");
-      })();
-    })();
-  </script>
+<script>
+  fetch("nav.html")
+    .then(r => { if (!r.ok) throw new Error("nav.html nicht gefunden"); return r.text(); })
+    .then(html => { document.getElementById("nav-placeholder").innerHTML = html; })
+    .catch(console.error);
+</script>
 </body>
 </html>
