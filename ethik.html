@@ -4,10 +4,14 @@
   <meta charset="utf-8" />
   <title>Planetary Settlement Index — Ethik</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- global (shared) -->
+  <link rel="stylesheet" href="shared/site.css">
+  <!-- deine bestehende Seite -->
   <link rel="stylesheet" href="style.css">
 
   <style>
-    /* SpaceX-artige Bildsektionen, aber ohne deine Wrap-Offsets zu zerstören */
+    /* Bildsektionen */
     .hero, .panel{
       position: relative;
       min-height: 100vh;
@@ -16,12 +20,12 @@
       align-items: center;
     }
 
-    /* Wichtig: KEIN eigenes left/top padding mehr – das kommt von .wrap / <pre> */
+    /* wichtig: kein eigenes padding (kommt aus .wrap / deinem Layout) */
     .panel-inner{
       position: relative;
       z-index: 2;
       max-width: 72ch;
-      padding: 0; /* übernimmt deine Grundlogik */
+      padding: 0;
     }
 
     .panel img{
@@ -49,16 +53,19 @@
       margin-bottom: 10px;
     }
 
-    h1{
+    /* nur für diese Seite (Hero-Typo) */
+    .hero h1{
       margin: 0 0 14px;
       font-size: clamp(34px, 6vw, 64px);
       line-height: 1.05;
+      font-weight: normal;
     }
 
-    h2{
+    .panel h2{
       margin: 0 0 10px;
       font-size: clamp(22px, 3.2vw, 34px);
       line-height: 1.15;
+      font-weight: normal;
     }
 
     .lead{
@@ -68,17 +75,24 @@
       font-size: 18px;
     }
 
-    /* Damit dein Header im <pre> oben nicht von Bildern "weggezogen" wird */
+    /* damit die Nav nicht "unter" den Bildern verschwindet */
     .wrap{ position: relative; z-index: 5; }
 
-    /* Optional: Abstand zwischen Header-<pre> und erster Bildsektion */
     .after-header-gap{ height: 10px; }
+
+    /* nav im <pre>-Block: gleiche Optik wie vorher */
+    #topnav{
+      display:inline;
+      white-space: normal;
+    }
+    #topnav a{ display:inline; }
+    #topnav a + a{ margin-left: 18px; }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-<pre><a id="id"></a><a href="index.html#marsbesiedlung">marsbesiedlung</a>   <a href="index.html#mondbasen">mondbasen</a>   <a href="index.html#offworld">off-world-oekonomie</a>    <a href="ethik.html">ethik</a>   <a href="index.html#technologie">technologie</a>   <a href="index.html#institutionen">institutionen</a>   <a href="index.html#unis">universitaeten</a>   <a href="index.html#thinktanks">thinktanks</a>   <a href="people/index.html">einzelpersonen</a>
+<pre><a id="id"></a><div id="nav-placeholder"></div>
 </pre>
 
 <div class="after-header-gap"></div>
@@ -134,5 +148,18 @@
 </section>
 
   </div>
+
+  <!-- NAVIGATION LADEN (wie bei index.html) -->
+  <script>
+    fetch("/nav.html")
+      .then(r => {
+        if (!r.ok) throw new Error("nav.html nicht gefunden");
+        return r.text();
+      })
+      .then(html => {
+        document.getElementById("nav-placeholder").innerHTML = html;
+      })
+      .catch(err => console.error(err));
+  </script>
 </body>
 </html>
