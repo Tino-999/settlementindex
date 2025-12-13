@@ -1,29 +1,14 @@
 (function () {
-  const placeholder = document.getElementById("nav-placeholder");
-  if (!placeholder) return;
+  // Wenn die Seite unter /settlementindex/ läuft (GitHub Pages), nutze dieses Prefix.
+  // Lokal (localhost) bleibt es leer.
+  const isGhPagesProject = location.pathname.startsWith("/settlementindex/");
+  const base = isGhPagesProject ? "/settlementindex" : "";
 
-  // Erkennt GitHub Pages automatisch
-  const isGitHubPages = location.hostname.endsWith("github.io");
+  const nav = document.getElementById("topnav");
+  if (!nav) return;
 
-  // Basis-Pfad bestimmen
-  // lokal: /
-  // GitHub Pages: /settlementindex/
-  const basePath = isGitHubPages ? "/settlementindex/" : "/";
-
-  // Pfad zu nav.html korrekt auflösen
-  const navUrl = basePath + "nav.html";
-
-  fetch(navUrl)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("nav.html nicht gefunden unter " + navUrl);
-      }
-      return response.text();
-    })
-    .then(html => {
-      placeholder.innerHTML = html;
-    })
-    .catch(err => {
-      console.error("Navigation konnte nicht geladen werden:", err);
-    });
+  nav.querySelectorAll("a[data-href]").forEach(a => {
+    const href = a.getAttribute("data-href");
+    a.setAttribute("href", base + href);
+  });
 })();

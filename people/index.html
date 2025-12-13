@@ -95,9 +95,11 @@
 </head>
 
 <body>
+<div id="nav-placeholder"></div>
+
 <div class="wrap">
 
-  <div id="nav-placeholder"></div>
+  <script src="../shared/init.js" defer></script>
 
   <h1>EINZELPERSONEN</h1>
 
@@ -118,12 +120,6 @@
 
 </div>
 
-<script>
-  fetch("nav.html")
-    .then(r => { if(!r.ok) throw new Error("nav.html nicht gefunden"); return r.text(); })
-    .then(html => { document.getElementById("nav-placeholder").innerHTML = html; })
-    .catch(console.error);
-</script>
 
 <script src="people/data.js"></script>
 
@@ -367,6 +363,7 @@
 
   render(initialMode);
 </script>
+<script src="shared/init.js" defer></script>
 
 </body>
 </html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Timeline · settlement index</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../shared/site.css" />
+</head>
+
+<body>
+
+<div id="nav-placeholder"></div>
+  <script src="../shared/init.js" defer></script>
+
+  <main class="wrap">
+    <h1>timeline</h1>
+    <p class="muted">
+      Zwei Spuren: <b>Science</b> (Realwelt) und <b>Sci-Fi</b> (Releases/Kultur).
+      Suche + Tags filtern. Zeiträume werden als Balken markiert.
+    </p>
+
+    <div class="controls">
+      <input id="q" type="search" placeholder="suche: apollo, mars, o’neill, expanse …" autocomplete="off" />
+      <label class="chip"><input type="checkbox" id="f-science" checked> science</label>
+      <label class="chip"><input type="checkbox" id="f-scifi" checked> sci-fi</label>
+      <input id="tag" type="text" placeholder="tag: mars / moon / ethics … (optional)" autocomplete="off" />
+      <button id="clear" type="button">reset</button>
+    </div>
+
+    <div class="grid2">
+      <section>
+        <h2>science</h2>
+        <div id="decades-science" class="decades"></div>
+        <div id="lane-science" class="lane"></div>
+      </section>
+
+      <section>
+        <h2>sci-fi</h2>
+        <div id="decades-scifi" class="decades"></div>
+        <div id="lane-scifi" class="lane"></div>
+      </section>
+    </div>
+
+    <footer class="muted small">
+      Einträge kommen aus <code>/data/entries.js</code>. Neue Daten: ChatGPT → JSON → <code>node scripts/add-entry.mjs</code>.
+    </footer>
+  </main>
+
+  <script src="../nav.js" defer></script>
+  <script type="module" src="./timeline.js"></script>
+<script src="shared/init.js" defer></script>
+
+</body>
+</html>

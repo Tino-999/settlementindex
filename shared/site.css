@@ -85,3 +85,129 @@ h1{
   pointer-events:none;
   text-decoration:none;
 }
+
+/* =========================================================
+   TIMELINE
+   ========================================================= */
+
+.controls {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+
+.controls input[type="search"],
+.controls input[type="text"] {
+  padding: .5rem .6rem;
+  border: 1px solid #333;
+  background: #0b0b0b;
+  color: #eee;
+  min-width: 240px;
+}
+
+.controls button {
+  padding: .5rem .6rem;
+  border: 1px solid #333;
+  background: #111;
+  color: #eee;
+  cursor: pointer;
+}
+
+.chip {
+  display: inline-flex;
+  gap: .4rem;
+  align-items: center;
+  padding: .45rem .6rem;
+  border: 1px solid #333;
+  background: #111;
+  color: #eee;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 980px) {
+  .grid2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.lane {
+  border-top: 1px solid #222;
+  padding-top: 1rem;
+}
+
+.yearblock {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #1b1b1b;
+}
+
+.year {
+  font-weight: 700;
+  opacity: .9;
+}
+
+.items {
+  display: grid;
+  gap: .75rem;
+}
+
+.card {
+  border: 1px solid #222;
+  background: #0b0b0b;
+  padding: .75rem .85rem;
+}
+
+.card .title {
+  display: flex;
+  justify-content: space-between;
+  gap: .75rem;
+  font-weight: 700;
+}
+
+.range {
+  font-weight: 600;
+  opacity: .8;
+}
+
+.links a {
+  opacity: .9;
+}
+
+.summary {
+  margin-top: .35rem;
+}
+
+.muted {
+  opacity: .7;
+}
+
+.small {
+  font-size: .9em;
+}
+
+/* Jahrzehnte-Navigation */
+.decades {
+  margin: .25rem 0 1rem 0;
+}
+
+.decade {
+  display: inline-block;
+  padding: .25rem .45rem;
+  border: 1px solid #222;
+  background: #0b0b0b;
+  margin: 0 .25rem .25rem 0;
+}
+
+.decadeHeader {
+  padding: .5rem 0;
+  border-top: 1px solid #1b1b1b;
+  margin-top: 1.25rem;
+}

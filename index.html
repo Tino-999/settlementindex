@@ -23,7 +23,8 @@
 
 <body>
 <div class="wrap">
-<pre><a id="id"></a><span id="nav-placeholder"></span>
+<div id="nav-placeholder"></div>
+<pre><a id="id"></a>
 
 CHAPTER 1 — MARSBESIEDLUNG           [<a href="#id">index</a>]
 <a id="marsbesiedlung"></a>
@@ -162,14 +163,7 @@ Neue Welten brauchen neue Vorsicht.
 
 </pre>
 </div>
-
-<script>
-  // nav.html relativ zum <base> laden
-  fetch("nav.html")
-    .then(r => { if (!r.ok) throw new Error("nav.html nicht gefunden"); return r.text(); })
-    .then(html => { document.getElementById("nav-placeholder").innerHTML = html; })
-    .catch(console.error);
-</script>
+<script src="shared/init.js" defer></script>
 
 </body>
 </html>
