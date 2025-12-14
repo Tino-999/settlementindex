@@ -1,28 +1,93 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   <title>Einzelpersonen · settlement index</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="../shared/site.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- global styles -->
+  <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
-  <!-- optional: wenn du nav.js nutzt -->
-  <script src="../nav.js" defer></script>
-
+  <!-- Navigation -->
   <div class="wrap">
-    <pre id="people-pre">
-EINZELPERSONEN
-
-sortierung:  <a href="?sort=last">nachname</a>  <a href="?sort=role">rolle</a>
-
-Archivische Porträts. Schwarzweiß. Umschaltbar: Nachname / Rolle.
-
-Lade Daten…
+    <pre>
+<a href="../index.html">index</a>   <a href="../timeline.html">timeline</a>   <a href="../ethik.html">ethik</a>   <a href="../movies.html">filme</a>   <a href="./">einzelpersonen</a>
     </pre>
   </div>
 
-  <script type="module" src="./people.js"></script>
+  <div class="wrap">
+    <h1>EINZELPERSONEN</h1>
+
+    <p>
+      sortierung:
+      <a href="#" id="sort-lastname">nachname</a>
+      <a href="#" id="sort-role">rolle</a>
+    </p>
+
+    <p class="muted">
+      Archivische Porträts. Schwarzweiß. Umschaltbar: Nachname / Rolle.
+    </p>
+
+    <div id="list"></div>
+  </div>
+
+  <script type="module">
+    const listEl = document.getElementById("list");
+    const sortLast = document.getElementById("sort-lastname");
+    const sortRole = document.getElementById("sort-role");
+
+    function lastName(name = "") {
+      const parts = name.trim().split(/\s+/);
+      return (parts[parts.length - 1] || "").toLowerCase();
+    }
+
+    function render(items) {
+      listEl.innerHTML = "";
+      for (const p of items) {
+        const row = document.createElement("div");
+        row.className = "row";
+
+        const name = document.createElement("div");
+        name.className = "name";
+        name.textContent = p.name || p.slug;
+
+        const role = document.createElement("div");
+        role.className = "role";
+        role.textContent = p.role || "";
+
+        row.appendChild(name);
+        row.appendChild(role);
+        listEl.appendChild(row);
+      }
+    }
+
+    async function loadPeople() {
+      const res = await fetch("../data/people_index.json", { cache: "no-store" });
+      if (!res.ok) {
+        listEl.innerHTML = "<p>Keine Daten gefunden.</p>";
+        return [];
+      }
+      return res.json();
+    }
+
+    let people = await loadPeople();
+    render(people);
+
+    sortLast.addEventListener("click", (e) => {
+      e.preventDefault();
+      render([...people].sort((a, b) =>
+        lastName(a.name).localeCompare(lastName(b.name))
+      ));
+    });
+
+    sortRole.addEventListener("click", (e) => {
+      e.preventDefault();
+      render([...people].sort((a, b) =>
+        (a.role || "").localeCompare(b.role || "")
+      ));
+    });
+  </script>
 </body>
 </html>
