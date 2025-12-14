@@ -1,7 +1,18 @@
 [
-  { "slug": "apollo", "label": "Apollo" },
-  { "slug": "mars", "label": "Mars" },
-  { "slug": "nasa", "label": "NASA" },
-  { "slug": "raumfahrt", "label": "Raumfahrt" }
+  {
+    "label": "Apollo",
+    "slug": "apollo"
+  },
+  {
+    "label": "Mars",
+    "slug": "mars"
+  },
+  {
+    "label": "NASA",
+    "slug": "nasa"
+  },
+  {
+    "label": "Raumfahrt",
+    "slug": "raumfahrt"
+  }
 ]
-}
