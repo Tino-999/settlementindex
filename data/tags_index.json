@@ -1,7 +1,30 @@
-[
-  { "slug": "apollo", "label": "Apollo" },
-  { "slug": "mars", "label": "Mars" },
-  { "slug": "nasa", "label": "NASA" },
-  { "slug": "raumfahrt", "label": "Raumfahrt" }
-]
+{
+  "apollo": [
+    {
+      "type": "timeline",
+      "slug": "apollo-11"
+    }
+  ],
+  "mars": [
+    {
+      "type": "movies",
+      "slug": "the-martian"
+    }
+  ],
+  "nasa": [
+    {
+      "type": "people",
+      "slug": "werner-von-braun"
+    },
+    {
+      "type": "timeline",
+      "slug": "apollo-11"
+    }
+  ],
+  "raumfahrt": [
+    {
+      "type": "people",
+      "slug": "werner-von-braun"
+    }
+  ]
 }

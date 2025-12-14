@@ -4,23 +4,11 @@
     "slug": "werner-von-braun",
     "name": "Wernher von Braun",
     "role": "Raketeningenieur",
-    "birth": "",
-    "death": "",
+    "birthYear": 1912,
+    "deathYear": 1977,
     "tags": [
-      "raumfahrt",
-      "nasa"
-    ]
-  },
-  {
-    "type": "people",
-    "slug": "werner-von-braun",
-    "name": "Wernher von Braun",
-    "role": "Raketeningenieur",
-    "birth": "",
-    "death": "",
-    "tags": [
-      "raumfahrt",
-      "nasa"
+      "nasa",
+      "raumfahrt"
     ]
   }
 ]
