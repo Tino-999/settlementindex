@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: psi-admin-backend
+    env: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    autoDeploy: true
+
