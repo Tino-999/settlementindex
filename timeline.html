@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Timeline · PSI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="shared/site.css">
+</head>
+<body>
+  <div class="wrap">
+    <div id="nav-slot"></div>
+    <h1>Timeline</h1>
+    <div id="list" class="list"></div>
+  </div>
+
+  <script type="module">
+    import "./shared/init.js";
+    import { ENTRIES } from "./data/entries.js";
+
+    const el = document.getElementById("list");
+    el.innerHTML = ENTRIES.map(e => `
+      <div class="card">
+        <div class="title">${e.year} · ${escapeHtml(e.title)}</div>
+        <div class="muted">${escapeHtml(e.track || "")}</div>
+        <div>${escapeHtml(e.summary || "")}</div>
+      </div>
+    `).join("");
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+  </script>
+</body>
+</html>
+

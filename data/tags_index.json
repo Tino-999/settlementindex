@@ -1,0 +1,7 @@
+[
+  { "slug": "apollo", "label": "Apollo" },
+  { "slug": "mars", "label": "Mars" },
+  { "slug": "nasa", "label": "NASA" },
+  { "slug": "raumfahrt", "label": "Raumfahrt" }
+]
+}

@@ -14,12 +14,14 @@ Schwerpunkte:
 - Ethik, Technologie, Institutionen
 - Filme & Literatur
 - Einzelpersonen (Autoren, Ingenieure, Denker)
+- Zeitliche Einordnung (Science vs. Science-Fiction)
 
 Designprinzip:
 - Minimalistisch
 - Text-first
 - Keine Frameworks
 - Vollständig statisch (GitHub Pages kompatibel)
+- Wartbarkeit wichtiger als visuelle Effekte
 
 
 ===============================================================================
@@ -30,10 +32,18 @@ ORDNERSTRUKTUR
 │
 ├─ index.html          -> Hauptseite (Kapitelübersicht, Langtext, Anker)
 ├─ ethik.html          -> Visuelle Kapitel-Seite (Hero + Panels)
-├─ nav.html            -> Zentrale Navigation (EINMAL definieren)
+├─ nav.html            -> Zentrale Navigation (rein inhaltlich)
 │
 ├─ shared/
-│   └─ site.css        -> Globales Styling (Farben, Typo, Basislayout)
+│   ├─ site.css        -> Globales Styling (Farben, Typo, Basislayout)
+│   └─ init.js         -> Zentrale Initialisierung (Navigation + Pfade)
+│
+├─ timeline/
+│   ├─ index.html      -> Zeitstrahl (Science & Sci-Fi, zwei Spuren)
+│   └─ timeline.js     -> Rendering, Filter, Jahrzehnt-Sprünge
+│
+├─ data/
+│   └─ entries.js      -> Gemeinsamer Zeitstrahl-Datensatz (Science + Sci-Fi)
 │
 ├─ movies/
 │   ├─ index.html      -> Filme & Dokus (Grid, Sortierung)
@@ -43,7 +53,6 @@ ORDNERSTRUKTUR
 ├─ people/
 │   ├─ index.html      -> Einzelpersonen (Grid, Sortierung)
 │   ├─ data.js         -> Datensatz der Personen
-│   ├─ add-person.mjs  -> Node-Script zum Ergänzen neuer Personen
 │   └─ images/         -> Portraits
 │
 └─ readme.txt          -> Diese Datei
@@ -53,30 +62,30 @@ ORDNERSTRUKTUR
 NAVIGATION (ZENTRALER MECHANISMUS)
 ===============================================================================
 
-Problem:
+Problem (alt):
 - Mehrere HTML-Seiten
-- Navigation soll überall identisch sein
-- KEINE Server-Logik, KEIN Framework
+- Navigation musste pro Seite gepflegt werden
+- Unterschiedliche Pfade (lokal vs. GitHub Pages)
 
-Lösung:
-- nav.html enthält NUR die Navigation
-- Jede Seite lädt nav.html per fetch()
+Aktuelle Lösung:
+- nav.html enthält AUSSCHLIESSLICH die Navigation (keine Logik)
+- shared/init.js lädt nav.html dynamisch
+- Pfade werden automatisch angepasst:
+  - lokal: /
+  - GitHub Pages: /settlementindex/
 
-Beispiel (in jeder HTML-Seite):
---------------------------------
-<div id="nav-placeholder"></div>
+Prinzip:
+---------
+- Jede Seite enthält:
+  - <div id="nav-placeholder"></div>
+  - <script src="shared/init.js" defer></script>
+    (bzw. ../shared/init.js in Unterordnern)
 
-<script>
-  fetch("nav.html")          // oder "../nav.html" je nach Ordner
-    .then(r => r.text())
-    .then(html => {
-      document.getElementById("nav-placeholder").innerHTML = html;
-    });
-</script>
-
-WICHTIG:
-- Root-Seiten (index.html, ethik.html): fetch("nav.html")
-- Unterordner (movies/, people/): fetch("../nav.html")
+Vorteile:
+---------
+- Navigation wird EINMAL gepflegt
+- Keine fetch()-Logik mehr in einzelnen Seiten
+- Neue Seiten benötigen nur zwei Zeilen Setup
 
 
 ===============================================================================
@@ -84,18 +93,46 @@ nav.html (INHALTLICH)
 ===============================================================================
 
 - Enthält ausschließlich <nav id="topnav">
-- Alle Links sind RELATIV ZUM ROOT gesetzt
+- Links werden über data-href definiert
+- KEINE absoluten /settlementindex/ Pfade mehr
 
 Beispiel:
 ---------
-<a href="/settlementindex/index.html#marsbesiedlung">marsbesiedlung</a>
-<a href="/settlementindex/ethik.html">ethik</a>
-<a href="/settlementindex/movies/">filme</a>
-<a href="/settlementindex/people/">einzelpersonen</a>
+<a data-href="/timeline/">timeline</a>
+<a data-href="/index.html#marsbesiedlung">marsbesiedlung</a>
+<a data-href="/movies/">filme</a>
+<a data-href="/people/">einzelpersonen</a>
 
-Warum absoluter Pfad?
-- GitHub Pages läuft unter /settlementindex/
-- Verhindert Pfadfehler bei Unterseiten
+Die tatsächlichen hrefs werden durch shared/init.js gesetzt.
+
+
+===============================================================================
+TIMELINE (NEU)
+===============================================================================
+
+timeline/index.html
+-------------------
+- Zeitstrahl mit zwei parallelen Spuren:
+  - Science (Realwelt)
+  - Sci-Fi (Bücher, Filme, Serien)
+- Scroll-basierte Exploration
+- Jahrzehnt-Sprungnavigation (z.B. 1960s, 2010s)
+- Suche & Tag-Filter
+- Zeiträume (start–end) werden unterstützt
+
+data/entries.js
+---------------
+- Zentrale Datenquelle für den Zeitstrahl
+- Jeder Eintrag ist ein "Event" mit:
+  - track: science | scifi
+  - year ODER start/end
+  - title, summary, tags
+  - links (Wikipedia, etc.)
+  - optionale Verknüpfung zu people (slugs)
+
+Ziel:
+- Wissenschaftliche Entwicklung und kulturelle Imagination
+  direkt vergleichbar machen.
 
 
 ===============================================================================
@@ -105,15 +142,15 @@ DATENGETRIEBENE SEITEN
 movies/index.html
 -----------------
 - Lädt movies/data.js
-- data.js definiert: const people = [...]
-- JS rendert Grid dynamisch
+- Grid-Layout
 - Sortierung:
   - alphabetisch
   - chronologisch
 - A–Z Sprungnavigation
 - Verlinkung:
-  - Buch (Wikipedia)
+  - Wikipedia
   - Autor → people/index.html#slug
+- Sortiermodus wird im localStorage gespeichert
 
 people/index.html
 -----------------
@@ -121,13 +158,9 @@ people/index.html
 - Sortierung:
   - nach Nachname
   - nach Rolle
-- Dynamische Gruppen (A–Z oder Rollen)
-- Jeder Eintrag hat:
-  - slug (für Deep-Links)
-  - Bild
-  - Lebensdaten
-  - Rolle
-  - knownFor
+- A–Z Sprungnavigation
+- Deep-Links über Slugs
+- Einheitliche Navigation über shared/init.js
 
 
 ===============================================================================
@@ -147,10 +180,6 @@ Beispiel:
 ---------
 "Robert Silverberg" -> robert-silverberg
 
-Filme verlinken Autoren so:
----------------------------
-../people/index.html#robert-silverberg
-
 
 ===============================================================================
 STYLING
@@ -162,13 +191,13 @@ shared/site.css
 - Monospace
 - Keine Animationen
 - Kontrastreich
-- Print-ähnliche Ästhetik
+- Archiv-/Print-Ästhetik
 
-Seiten-spezifisches CSS:
-------------------------
-- index.html: klassischer <pre>-Stil
-- ethik.html: Fullscreen Panels + Bilder
-- movies / people: Grid-Layouts
+Layout-Prinzip:
+---------------
+- Navigation und Content teilen sich denselben Container (.wrap)
+- Einheitliche Abstände über alle Seiten
+- Keine visuelle Abhängigkeit von JavaScript
 
 
 ===============================================================================
@@ -185,9 +214,9 @@ https://tino-999.github.io/settlementindex/
 
 Wichtig:
 --------
-- KEINE führenden "/" außerhalb von /settlementindex/
-- fetch() funktioniert auf GitHub Pages
-- Bei Problemen: Hard Reload (Ctrl+F5)
+- Navigation wird dynamisch angepasst
+- Keine hartkodierten Projektpfade in HTML-Dateien
+- Bei Anzeigeproblemen: Hard Reload (Ctrl+F5)
 
 
 ===============================================================================
@@ -196,9 +225,9 @@ DESIGNPHILOSOPHIE
 
 - Inhalte sind wichtiger als Technik
 - Texte sollen wie Archivmaterial wirken
-- Keine Interaktion ohne inhaltlichen Mehrwert
 - Navigation ist Werkzeug, kein Feature
-- Die Seite soll auch in 10 Jahren noch lesbar sein
+- Komplexität wird bewusst vermieden
+- Die Seite soll auch in 10–20 Jahren noch lesbar und wartbar sein
 
 
 ===============================================================================

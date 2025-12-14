@@ -1,0 +1,26 @@
+{
+  "format": "Film",
+  "links": [
+    { "label": "IMDb", "url": "https://www.imdb.com/title/tt3659388/" }
+  ],
+  "meta": {
+    "ai": { "used": false },
+    "createdAt": "2025-12-14T00:00:00Z",
+    "createdBy": "seed"
+  },
+  "people": [],
+  "slug": "the-martian",
+  "sources": [
+    {
+      "accessedAt": "2025-12-14",
+      "title": "IMDb – The Martian",
+      "url": "https://www.imdb.com/title/tt3659388/"
+    }
+  ],
+  "status": "reviewed",
+  "summary": "Ein Astronaut kämpft ums Überleben auf dem Mars.",
+  "tags": ["mars"],
+  "title": "The Martian",
+  "year": 2015
+}
+

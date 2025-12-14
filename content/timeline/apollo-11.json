@@ -1,0 +1,24 @@
+{
+  "links": [],
+  "meta": {
+    "ai": { "used": false },
+    "createdAt": "2025-12-14T00:00:00Z",
+    "createdBy": "seed"
+  },
+  "people": ["werner-von-braun"],
+  "slug": "apollo-11",
+  "sources": [
+    {
+      "accessedAt": "2025-12-14",
+      "title": "NASA – Apollo 11",
+      "url": "https://www.nasa.gov/mission/apollo-11/"
+    }
+  ],
+  "status": "reviewed",
+  "summary": "Erste bemannte Mondlandung.",
+  "tags": ["apollo", "nasa"],
+  "title": "Apollo 11",
+  "track": "raumfahrt",
+  "year": 1969
+}
+

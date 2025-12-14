@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>People · PSI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="shared/site.css">
+</head>
+<body>
+  <div class="wrap">
+    <div id="nav-slot"></div>
+    <h1>People</h1>
+    <div id="list" class="list"></div>
+  </div>
+
+  <script type="module">
+    import "./shared/init.js";
+    import { PEOPLE } from "./people/data.js";
+
+    const el = document.getElementById("list");
+    el.innerHTML = PEOPLE.map(p => `
+      <div class="card">
+        <div class="title">${escapeHtml(p.name)}</div>
+        <div class="muted">${escapeHtml(p.role || "")}</div>
+        <div>${escapeHtml(p.summary || "")}</div>
+      </div>
+    `).join("");
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+  </script>
+</body>
+</html>
+

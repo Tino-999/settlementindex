@@ -1,0 +1,9 @@
+{
+  "tags": [
+    { "slug": "mars", "label": "Mars" },
+    { "slug": "raumfahrt", "label": "Raumfahrt" },
+    { "slug": "nasa", "label": "NASA" },
+    { "slug": "apollo", "label": "Apollo" }
+  ]
+}
+

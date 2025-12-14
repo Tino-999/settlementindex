@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PSI Admin</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="hdr">
+      <div class="hdr-left">PSI Admin</div>
+      <div class="hdr-mid" id="crumb">Wizard</div>
+      <div class="hdr-right">
+        <span id="loginState" class="muted">…</span>
+        <button id="btnLogin" class="btn">Login</button>
+        <button id="btnLogout" class="btn btn-ghost">Logout</button>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="panel">
+        <div class="tabs">
+          <button class="tab active" data-step="1">1 Name</button>
+          <button class="tab" data-step="2">2 Details</button>
+          <button class="tab" data-step="3">3 Quellen</button>
+          <button class="tab" data-step="4">4 Verknüpfen</button>
+          <button class="tab" data-step="5">5 Save</button>
+        </div>
+
+        <div class="row">
+          <label>Typ</label>
+          <select id="type" class="input">
+            <option value="people">people</option>
+            <option value="movies">movies</option>
+            <option value="timeline">timeline</option>
+          </select>
+        </div>
+
+        <div id="stepArea"></div>
+
+        <div class="actions">
+          <button id="prev" class="btn btn-ghost">← Zurück</button>
+          <button id="next" class="btn">Weiter →</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="tabs">
+          <button class="tab2 active" data-tab="preview">Preview</button>
+          <button class="tab2" data-tab="diff">Diff</button>
+          <button class="tab2" data-tab="issues">Errors/Warnings</button>
+        </div>
+
+        <div id="rightArea" class="right"></div>
+      </section>
+    </main>
+
+    <footer class="ftr muted">
+      Dark • Monospace • No secrets • Backend: <span id="backendUrl"></span>
+    </footer>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
+
