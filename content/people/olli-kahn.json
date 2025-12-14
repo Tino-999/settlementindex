@@ -1,0 +1,26 @@
+{
+  "links": [
+    { "label": "Wikipedia", "url": "https://de.wikipedia.org/wiki/Wernher_von_Braun" }
+  ],
+  "meta": {
+    "ai": { "used": false },
+    "createdAt": "2025-12-14T00:00:00Z",
+    "createdBy": "seed"
+  },
+  "name": "Wernher von Braun",
+  "role": "Raketeningenieur",
+  "slug": "werner-von-braun",
+  "sources": [
+    {
+      "accessedAt": "2025-12-14",
+      "title": "Wikipedia – Wernher von Braun",
+      "url": "https://de.wikipedia.org/wiki/Wernher_von_Braun"
+    }
+  ],
+  "status": "reviewed",
+  "summary": "Deutscher und später US-amerikanischer Raketenpionier, prägend für die Raumfahrt des 20. Jahrhunderts.",
+  "tags": ["raumfahrt", "nasa"],
+  "birthYear": 1912,
+  "deathYear": 1977
+}
+
