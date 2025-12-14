@@ -1,4 +1,14 @@
 [
-  { "slug": "werner-von-braun", "name": "Wernher von Braun" }
+  {
+    "type": "people",
+    "slug": "werner-von-braun",
+    "name": "Wernher von Braun",
+    "role": "Raketeningenieur",
+    "birth": "",
+    "death": "",
+    "tags": [
+      "raumfahrt",
+      "nasa"
+    ]
+  }
 ]
-
