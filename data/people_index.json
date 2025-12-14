@@ -1,4 +1,10 @@
 [
-  { "slug": "werner-von-braun", "name": "Wernher von Braun" }
+  {
+    "name": "olli kahn",
+    "slug": "olli-kahn"
+  },
+  {
+    "name": "Wernher von Braun",
+    "slug": "werner-von-braun"
+  }
 ]
-
