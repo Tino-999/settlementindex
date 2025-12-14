@@ -1,0 +1,29 @@
+{
+  "birthYear": null,
+  "deathYear": null,
+  "links": [],
+  "meta": {
+    "ai": {
+      "model": "",
+      "provider": "",
+      "used": false
+    },
+    "createdAt": "2025-12-14T12:41:04Z",
+    "createdBy": "tino-999",
+    "updatedAt": "2025-12-14T12:41:42Z",
+    "updatedBy": "tino-999"
+  },
+  "name": "Zubin X",
+  "role": "...",
+  "slug": "zubin-mars",
+  "sources": [
+    {
+      "accessedAt": "2025-12-14",
+      "title": "wikipedia",
+      "url": "https://www.wikipedia.de/"
+    }
+  ],
+  "status": "draft",
+  "summary": "1 Satz",
+  "tags": []
+}
