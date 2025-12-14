@@ -1,0 +1,29 @@
+{
+  "birthYear": null,
+  "deathYear": null,
+  "links": [],
+  "meta": {
+    "ai": {
+      "model": "",
+      "provider": "",
+      "used": false
+    },
+    "createdAt": "2025-12-14T14:43:26Z",
+    "createdBy": "tino-999",
+    "updatedAt": "2025-12-14T14:44:12Z",
+    "updatedBy": "tino-999"
+  },
+  "name": "Olli Kahn",
+  "role": "Torwart",
+  "slug": "olli-kahn",
+  "sources": [
+    {
+      "accessedAt": "2025-12-14",
+      "title": "wikipedia",
+      "url": "https://www.wikipedia.de/"
+    }
+  ],
+  "status": "draft",
+  "summary": "der war ein super torwart",
+  "tags": []
+}
