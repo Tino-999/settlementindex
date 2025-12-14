@@ -1,0 +1,29 @@
+{
+  "birthYear": null,
+  "deathYear": null,
+  "links": [],
+  "meta": {
+    "ai": {
+      "model": "",
+      "provider": "",
+      "used": false
+    },
+    "createdAt": "2025-12-14T12:04:38Z",
+    "createdBy": "tino-999",
+    "updatedAt": "2025-12-14T12:10:07Z",
+    "updatedBy": "tino-999"
+  },
+  "name": "Test Person",
+  "role": "",
+  "slug": "test-person",
+  "sources": [
+    {
+      "accessedAt": "2025-12-14",
+      "title": "internal",
+      "url": "https://example.com"
+    }
+  ],
+  "status": "draft",
+  "summary": "Interner Testeintrag zur Validierung des PSI Admin Backends.\n",
+  "tags": []
+}
