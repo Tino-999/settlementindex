@@ -1,4 +1,7 @@
 [
-  { "slug": "the-martian", "title": "The Martian", "year": 2015 }
+  {
+    "slug": "the-martian",
+    "title": "The Martian",
+    "year": 2015
+  }
 ]
-
